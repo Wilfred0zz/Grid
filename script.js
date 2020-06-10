@@ -2,19 +2,18 @@ let rows = 0;
 let cols = 0;
 
 const ar = () => {
-    var table = document.getElementById("myTable");
-    if(rows == 0){
-        let rowCell = document.createElement("tr");
+    let table = document.getElementById("myTable");
+    let rowCell = document.createElement("tr");
+    if(rows == 0 && cols == 0){
         let colCell = document.createElement("td");
         rowCell.appendChild(colCell);
         table.appendChild(rowCell);
         rows++;
         cols++;
     }else{
-        let rowCell = document.createElement("tr");
        for(let i = 0; i<cols; i++){
-           let newCol = document.createElement("td");
-           rowCell.appendChild(newCol);
+           let colCell = document.createElement("td");
+           rowCell.appendChild(colCell);
        }
        table.appendChild(rowCell)
        rows++;
@@ -22,12 +21,12 @@ const ar = () => {
 }
 
 const ac = () => {
-    var table = document.getElementById("myTable");
-    if(rows == 0){
+    let table = document.getElementById("myTable");
+    if(rows == 0 && cols == 0){
         let rowCell = document.createElement("tr");
         let colCell = document.createElement("td");
-        colCell.appendChild(rowCell);
-        table.appendChild(colCell);
+        rowCell.appendChild(colCell);
+        table.appendChild(rowCell);
         cols++;
         rows++;
     }
