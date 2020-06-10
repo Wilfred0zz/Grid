@@ -41,11 +41,20 @@ const ac = () => {
 } 
 
 const rr = () => {
-
+	//removes the first row 
+	document.getElementById("myTable").deleteRow(0);
+	row--;
 }
 
 const rc = () => {
-
+	let table = document.getElementById("myTable");
+	let deleterows = document.getElementsByTagName('tr')
+	//removes the last column
+    for(let i of deleterows){
+    	let last = i.lastElementChild;
+    	i.removeChild(last);
+    }
+	col--;
 }
 
 const fillU = () => {
