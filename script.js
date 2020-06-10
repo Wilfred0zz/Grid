@@ -21,8 +21,13 @@ const ac = () => {
     var table = document.getElementById("myTable");
     let rowCell = document.createElement("tr");
     let colCell = document.createElement("td")
-    rowCell.appendChild(colCell);
-    table.appendChild(rowCell);
+    colCell.appendChild(rowCell);
+    table.appendChild(colCell);
+    rowCell.style.border = 'solid';
+    colCell.style.border = 'solid';
+    colCell.height = '50px';
+    colCell.width = '50px';
+    colCell.style.backgroundColor = "white";
     cols++;
 } 
 
