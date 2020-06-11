@@ -23,11 +23,9 @@ const ar = () => {
         rows++;
         cols = 1;
     } else { //if there columns and are adding rows it will use the counter as a way to know how many more squares to add for each column.
-        for (let i = 0; i < cols; i++) {
-            let colCell = makeCell();
-            rowCell.appendChild(colCell);
-        }
-        table.appendChild(rowCell)
+        const row = table.insertRow();
+        while (table.rows[0].cells.length != row.cells.length)
+            row.append(makeCell());
         rows++; //increases row counter for overall amount of rows
     }
 }
@@ -35,6 +33,7 @@ const ar = () => {
 const ac = () => {
         let table = document.getElementById("myTable");
         if (rows == 0 || cols == 0) { //checks if there are no rows or columns then it will create one and keep track of it by increasing counter.
+
             let rowCell = document.createElement("tr");
             let colCell = makeCell();
             rowCell.appendChild(colCell);
@@ -42,12 +41,10 @@ const ac = () => {
             cols++;
             rows = 1;
         } else { // if there are rows already existing then it will add columns depending on the number of rows.
-            let rowsMade = document.getElementsByTagName("tr");
-            for (let i = 0; i < rows; i++) {
-                let colCell = makeCell();
-                rowsMade[i].appendChild(colCell);
-            }
-            cols++; //increases number of columns
+            document.querySelectorAll("tr").forEach(row =>
+                row.append(makeCell()));
+            //increases number of columns
+            cols++;
         }
     }
     //removes the first row 
@@ -56,9 +53,16 @@ const rr = () => {
         alert("No rows to remove!");
     else {
         let table = document.getElementById("myTable");
-        let rows = table.rows.length;
-        table.deleteRow(rows - 1)
+        let rowCount = table.rows.length;
+        table.deleteRow(rowCount - 1)
         rows--;
+        if (rows == 0 && cols != 0) {
+            for (let i = 0; i < cols; i++) {
+                rc();
+            }
+            cols = 0;
+            rows = 0;
+        }
     }
 }
 
@@ -69,6 +73,13 @@ const rc = () => {
         document.querySelectorAll("tr").forEach(row =>
             row.removeChild(row.lastChild))
         cols--;
+        if (cols == 0 && rows != 0) {
+            for (let i = 0; i < rows; i++) {
+                rr();
+            }
+            rows = 0;
+            cols = 0;
+        }
     }
 }
 
