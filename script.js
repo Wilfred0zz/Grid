@@ -55,7 +55,9 @@ const rr = () => {
     if (rows == 0)
         alert("No rows to remove!");
     else {
-        document.getElementById("myTable").deleteRow(0);
+        let table = document.getElementById("myTable");
+        let rows = table.rows.length;
+        table.deleteRow(rows - 1)
         rows--;
     }
 }
