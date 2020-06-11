@@ -16,12 +16,12 @@ const makeCell = () => {
 const ar = () => {
     let table = document.getElementById("myTable");
     let rowCell = document.createElement("tr");
-    if (rows == 0 && cols == 0) { //checks if there are no columns or rows then it will create one and keep track of it by increasing counter.
+    if (rows == 0 || cols == 0) { //checks if there are no columns or rows then it will create one and keep track of it by increasing counter.
         let colCell = makeCell();
         rowCell.appendChild(colCell);
         table.appendChild(rowCell);
         rows++;
-        cols++;
+        cols = 1;
     } else { //if there columns and are adding rows it will use the counter as a way to know how many more squares to add for each column.
         for (let i = 0; i < cols; i++) {
             let colCell = makeCell();
@@ -33,32 +33,41 @@ const ar = () => {
 }
 
 const ac = () => {
-    let table = document.getElementById("myTable");
-    if (rows == 0 && cols == 0) { //checks if there are no rows or columns then it will create one and keep track of it by increasing counter.
-        let rowCell = document.createElement("tr");
-        let colCell = makeCell();
-        rowCell.appendChild(colCell);
-        table.appendChild(rowCell);
-        cols++;
-        rows++;
-    } else { // if there are rows already existing then it will add columns depending on the number of rows.
-        let rowsMade = document.getElementsByTagName("tr");
-        for (let i = 0; i < rows; i++) {
+        let table = document.getElementById("myTable");
+        if (rows == 0 || cols == 0) { //checks if there are no rows or columns then it will create one and keep track of it by increasing counter.
+            let rowCell = document.createElement("tr");
             let colCell = makeCell();
-            rowsMade[i].appendChild(colCell);
+            rowCell.appendChild(colCell);
+            table.appendChild(rowCell);
+            cols++;
+            rows = 1;
+        } else { // if there are rows already existing then it will add columns depending on the number of rows.
+            let rowsMade = document.getElementsByTagName("tr");
+            for (let i = 0; i < rows; i++) {
+                let colCell = makeCell();
+                rowsMade[i].appendChild(colCell);
+            }
+            cols++; //increases number of columns
         }
-        cols++; //increases number of columns
+    }
+    //removes the first row 
+const rr = () => {
+    if (rows == 0)
+        alert("No rows to remove!");
+    else {
+        document.getElementById("myTable").deleteRow(0);
+        rows--;
     }
 }
 
-const rr = () => {
-    //removes the first row 
-    document.getElementById("myTable").deleteRow(0);
-}
-
 const rc = () => {
-    document.querySelectorAll("tr").forEach(row =>
-        row.removeChild(row.lastChild))
+    if (cols == 0)
+        alert("No columns to remove!");
+    else {
+        document.querySelectorAll("tr").forEach(row =>
+            row.removeChild(row.lastChild))
+        cols--;
+    }
 }
 
 //Object that stores color values
@@ -75,9 +84,10 @@ const cells = () => document.querySelectorAll("td");
 
 //Calls forEach on cells and colors any cell with no background color or white ones
 const fillU = () => {
-    cells().forEach(cell => (!cell.style.backgroundColor || cell.style.backgroundColor == "#FFFFFF") &&
-        (cell.style.backgroundColor = list[document.getElementById("colors").value])
-    )
+    cells().forEach(cell => {
+        if (cell.style.backgroundColor == "rgb(255, 255, 255)")
+            cell.style.backgroundColor = list[document.getElementById("colors").value]
+    })
 }
 
 //Calls forEach() on cells and colors each cell based on the selected color
